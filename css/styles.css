@@ -1,0 +1,81 @@
+*{
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+}
+
+a{
+  text-decoration: none;
+}
+
+.main-header{
+  text-align: center;
+}
+
+.container{
+  text-align: center;
+}
+
+.container p {
+  display:inline;
+}
+
+#holder{
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top:50px;
+}
+
+.user{
+  width:90%;
+  border: 1px solid black;
+  border-radius: 15px;
+  margin: 10px 0;
+}
+
+.user button{
+  margin: 0 10px 10px 10px;
+  background-color: #FFFFFF;
+  border:none;
+}
+
+.selected{
+  box-shadow: 0px 0px 0px 5px rgba(0,0,0,0.25);
+}
+
+#transaction{
+  width:90%;
+  margin: 25px 5% 0 5%;
+  border: 1px solid navy;
+  border-radius: 15px;
+  padding: 5px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#transaction h4{
+  margin:10px;
+}
+
+#transaction input[type="text"]{
+  padding: 10px;
+  margin:5px;
+}
+
+#transaction button{
+  padding: 5px 25px;
+  margin:10px 0;
+}
+
+.user input[type="text"]{
+  font-size:1.5em;
+  padding:0;
+  border:1px dashed black;
+  margin-top: 0.83em;
+  margin-bottom:1px;
+  text-align: center;
+  height:29px;
+}
+
