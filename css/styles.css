@@ -38,6 +38,7 @@ a{
   margin: 0 10px 10px 10px;
   background-color: #FFFFFF;
   border:none;
+  margin-top:0.75em;
 }
 
 .selected{
@@ -53,6 +54,7 @@ a{
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 #transaction h4{
@@ -73,9 +75,12 @@ a{
   font-size:1.5em;
   padding:0;
   border:1px dashed black;
-  margin-top: 0.83em;
-  margin-bottom:1px;
+  margin-top: 0.75em;
   text-align: center;
   height:29px;
 }
 
+.user h2{
+  padding-top:0.75em;
+  margin:0;
+}
