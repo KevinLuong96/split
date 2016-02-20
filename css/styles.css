@@ -22,17 +22,24 @@ input[type="text"]{
   margin:5px;
 }
 
+.name{
+  width:80%;
+  margin:auto;
+  border: 1px solid navy;
+  border-radius: 15px;
+}
+
 #name{
-  width: 54%;
   display:block;
   margin:auto;
 }
 
 #holder{
+  width:100%;
   display:flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top:50px;
+  margin-top:10px;
 }
 
 #transaction h4,
@@ -61,15 +68,16 @@ h4{
 }
 
 #transaction{
-  width:90%;
-  margin: 25px 5% 0 5%;
+  width: 80%;
+  margin: 25px 10% 0 10%;
   border: 1px solid navy;
   border-radius: 15px;
-  padding: 5px;
+  padding: 5px 0;
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  position:relative;
 }
 
 button {
@@ -90,6 +98,8 @@ button {
 #undo{
   height:30px;
   margin-left: 10px;
+  position: absolute;
+  bottom: 16px;
 }
 
 .user input[type="text"]{
@@ -130,7 +140,8 @@ button {
 }
 
 @media(min-width: 50em){
-  #input input[type="text"]{
+
+  input[type="text"]{
     width: 40%;
   }
 
@@ -138,18 +149,22 @@ button {
     flex-direction: row;
     justify-content: center;
   }
-}
 
-@media(min-width: 75em){
-  .user{
-    width: 30%;
+  .container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
+
+  .name,
   #transaction{
     width: 40%;
+    margin: 10px;
   }
 
-  #input input[type="text"]{
-    width:25%;
+  .name h4,
+  #accept{
+    margin:16px 0;
   }
-
 }
+
