@@ -16,8 +16,16 @@ a{
   text-align: center;
 }
 
-.container p {
-  display:inline;
+input[type="text"]{
+  width:60%;
+  padding: 10px;
+  margin:5px;
+}
+
+#name{
+  width: 54%;
+  display:block;
+  margin:auto;
 }
 
 #holder{
@@ -27,18 +35,25 @@ a{
   margin-top:50px;
 }
 
+#transaction h4,
+#input{
+  width:100%;
+}
+
+h4{
+  margin: 10px;
+}
+#input{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .user{
   width:90%;
   border: 1px solid black;
   border-radius: 15px;
   margin: 10px 0;
-}
-
-.user button{
-  margin: 0 10px 10px 10px;
-  background-color: #FFFFFF;
-  border:none;
-  margin-top:0.75em;
 }
 
 .selected{
@@ -57,18 +72,24 @@ a{
   align-items: center;
 }
 
-#transaction h4{
-  margin:10px;
-}
-
-#transaction input[type="text"]{
-  padding: 10px;
-  margin:5px;
-}
-
-#transaction button{
+button {
   padding: 5px 25px;
   margin:10px 0;
+  background-color: #FFFFFF;
+  border: 1px solid navy;
+  border-radius:15px;
+}
+
+.user button{
+  margin: 0 10px 10px 10px;
+  background-color: #FFFFFF;
+  border:none;
+  margin-top:0.75em;
+}
+
+#undo{
+  height:30px;
+  margin-left: 10px;
 }
 
 .user input[type="text"]{
@@ -83,4 +104,52 @@ a{
 .user h2{
   padding-top:0.75em;
   margin:0;
+}
+
+.transaction-list{
+  display:none;
+  width:80%;
+  margin:auto;
+  border-top: 1px solid black;
+}
+
+@media(min-width: 41em){
+  .user{
+    width:40%;
+    margin: 10px;
+  }
+
+  .user button{
+    padding: 15px;
+  }
+
+  #transaction{
+    width:60%;
+    margin: 25px auto;
+  }
+}
+
+@media(min-width: 50em){
+  #input input[type="text"]{
+    width: 40%;
+  }
+
+  #input{
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+@media(min-width: 75em){
+  .user{
+    width: 30%;
+  }
+  #transaction{
+    width: 40%;
+  }
+
+  #input input[type="text"]{
+    width:25%;
+  }
+
 }

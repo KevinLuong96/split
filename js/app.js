@@ -42,14 +42,39 @@ Purchase.prototype.removeBalance = function(){
 //price between their balances
 Purchase.prototype.addBalance = function(){
   var buyer;
+  var textString;
+  var $list = [];
+  var $transactionList;
+  var listLength;
+
   for(var i = 0; i < this.buyers.length; i++){
     // select the person with the same name as the elements in the buyers list
     buyer = getObjectByName(this.buyers[i], 'person');
     // add to their balance the price of the transaction divided by # of people
     buyer.balance += Math.round (this.price / this.buyers.length * 100) / 100;
-    // refresh the ui to show the updated balance
+
+    // add the transaction to the list of transactions in the UI
+    textString = '<p class= purchase>';
+    textString += this.name;
+    textString += ': ';
+    textString += this.price;
+    textString += '</p>'
+
+    // record all of the list items which were appended to the ui
+    $list = $('.' + buyer.name + ' .transaction-list').children();    
+
+    /*
+    since the ui is rewritten every time, keep track of current transaction list 
+    items appended to the html
+    */
+
+    // // refresh the ui to show the updated balance
     $('.' + buyer.name).replaceWith(buyer.toHTML());
-    }
+    
+
+    $('.' + buyer.name + ' .transaction-list').append($list);
+    $('.' + buyer.name + ' .transaction-list').append(textString);
+  }
 
   /*
     Unecessary code after getObjectByName function is implemented
@@ -110,6 +135,7 @@ function createTransaction(){
   //add transaction amount to balance of buyers
   transaction.addBalance();
 
+  //reset the value of the forms
   $transactionText.val('');
   $transactionPrice.val('');
 
@@ -148,17 +174,12 @@ Person.prototype.toHTML = function(){
   htmlString += "<button type='button' class='view'>View</button>"
   htmlString += "<button type='button' class='edit'>Edit</button>"
   htmlString += "<button type='button' class='delete'>Delete</button>"
-  htmlString += "<p class= 'transaction-list'></p>"
+  htmlString += "<div class= 'transaction-list'></div>"
   htmlString += "</li>"
+
+
   return htmlString;
 };
-
-//undo function holds a list of transactions and when called reverses the last 
-//transaction 
-function undo(){
-
-};
-
 
 //create user object and return html string
 function newUser(event){
@@ -169,8 +190,10 @@ function newUser(event){
 }
 //Create a new list item when button or enter key are pressed
 $('#accept').click(function(){
-  $('#holder').append(newUser);
-  $('#name').val("");
+  if( $('#name').val() !== '' ){
+    $('#holder').append(newUser);
+    $('#name').val("");
+  } 
 });
 
 $('#name').keypress(function(e) {
@@ -180,11 +203,53 @@ $('#name').keypress(function(e) {
   }
 });
 
+$('#undo').click(function(){
+  var transaction
+  var people;
+  var balanceString;
+
+  // if there are any transactions to undo
+  if(transactionList.length > 0 ){
+    // set the temporary variable to the last added transaction
+    transaction = transactionList.pop();
+    // remove the price of the transaction from the people objects
+    transaction.removeBalance();
+
+    for(var i = 0; i < transaction.buyers.length; i++){
+      people = getObjectByName( transaction.buyers[i], 'person');
+      for(var j = 0; j < people.transactions.length; j++){
+        // find and remove the transaction from the persons list of transactions
+        if (transaction.name === people.transactions[j].name){
+          people.transactions.splice(j,1);
+        }
+
+        balanceString = "<h2 class='user-balance'>";
+        balanceString += people.balance;
+        balanceString += '</h2>';
+
+        $('.' + people.name + ' .user-balance').replaceWith(balanceString);
+      }
+
+      // remove the last added transaction from the people view UI
+      $('.' + people.name + ' .transaction-list').children().last()
+        .replaceWith('');
+
+      $('#item-input').val(transaction.name);
+      $('#price').val(transaction.price);
+    }
+  }
+});
+
 //Add class selected and add visual effect to people object 
 //when they are pressed
 $('#holder').delegate('h2','click',function(){
   $(this).parent().toggleClass('selected');
 });
+
+//Bind functionality to view button in person HTML code
+$('#holder').delegate('.view', 'click', function(){
+  $(this).nextAll('.transaction-list').slideToggle();
+})
 
 //Bind functionality to delete button in person object
 $('#holder').delegate('.delete', 'click', function(){
@@ -192,40 +257,84 @@ $('#holder').delegate('.delete', 'click', function(){
   var person;
   var verify;
   var purchases;
+  var length;
 
   verify = window.confirm("Are you sure you want to delete " + name + "?");
 
   if( verify ){
-    person = getObjectByName(name, 'person');
-    // for each item in the buyers list
-    for(var i = 0; i < person.transactions.length; i++){
-      // remove balance from other people's balance
-      purchases = getObjectByName(person.transactions[i].name, 'transaction');
-      purchases.removeBalance();
 
+    person = getObjectByName(name, 'person');
+    console.log(person);
+    console.log(person.transactions.length);
+    length = person.transactions.length;
+
+    // for each item in the buyers list
+    for(var i = 0; i < length; i++){
+      console.log("hi");
+      // remove balance from other people's balance
+      console.log(person.transactions[i].name);
+      purchases = getObjectByName(person.transactions[i].name, 'transaction');
+      console.log(purchases);
+      purchases.removeBalance();
 
       // remove person from buyers list
       for(var j = 0; j < purchases.buyers.length; j++){
         if(name === purchases.buyers[j]){
-          purchases.buyers.splice(j, 1);
-        }
-      }
 
-      // remove person from people list
-      for(var i = 0; i < peopleList.length; i++){
-        if(name === peopleList[i].name){
-          peopleList.splice(i, 1);
+          purchases.buyers.splice(j, 1);
+
+          // if there are no more buyers, delete the transaction from the list
+          if(purchases.buyers.length === 0){  
+            for(var k = 0; k < transactionList.length; k++){
+              if( transactionList[k].name === purchases.name ){
+                transactionList.splice(k, 1);
+              }
+            }
+          }
+            // replace the transaction in the transaction list with the new edited one
+          else{
+            for(var k = 0; k < transactionList.length; k++){
+              if( transactionList[k].name === purchases.name ){
+                transactionList[k] = purchases;
+              }
+            }
+          }
         }
       }
+    
 
       // readd balance to other elements in the purchase
-      purchases.addBalance();
 
-      // delete ui element
-      $('.' + name).replaceWith('');
+      if(purchases.buyers.length != 0){
+        purchases.addBalance();
+
+        // console.log(purchases);
+        for( var l = 0; l < purchases.buyers.length; l++){
+          $('.' + purchases.buyers[l] + ' .transaction-list').children().last().replaceWith('') 
+        //   console.log("deleting last p element");
+        }
+      }
+
+
+// -------------------------------- to do --------------------------------------------------
+// figure out why deleting the middle transactions does not work properly 
+// ----------------------------------------------------------------------------------------------------
+// remove the second added ui element when a transaction is deleted
+    console.log(person.transactions);
+    } // for each transaction in the person's list
+
+    // remove person from people list
+    for(var i = 0; i < peopleList.length; i++){
+      if(name === peopleList[i].name){
+        peopleList.splice(i, 1);
+      }
     }
-  }
-})
+    // delete ui element
+    $('.' + name).replaceWith('');
+    //delete duplicate transaction list item
+
+  } //if verify is true
+});
 
 //Bind functionality to edit button in person object
 $('#holder').delegate('.edit', 'click', function(){
