@@ -4,6 +4,10 @@
   font-weight: 300;
 }
 
+#split{
+  width: 20%;
+  margin-top: 10px;
+}
 a{
   text-decoration: none;
 }
@@ -57,7 +61,7 @@ h4{
 }
 
 .user{
-  width:90%;
+  width:80%;
   border: 1px solid black;
   border-radius: 15px;
   margin: 10px 0;
@@ -133,7 +137,8 @@ button {
     padding: 15px;
   }
 
-  #transaction{
+  #transaction,
+  .name{
     width:60%;
     margin: 25px auto;
   }
