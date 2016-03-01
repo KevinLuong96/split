@@ -3,6 +3,11 @@ var transactionList= [];
 //hold a list of the people objects
 var peopleList= [];
 
+var help;
+var nameHelp;
+var transactionHelp;
+var peopleHelp;
+
 // Iterate through the list of people or transactions 
 //to find the person with the given name
 function getObjectByName(name,type){
@@ -191,14 +196,14 @@ function newUser(event){
 //Create a new list item when button or enter key are pressed
 $('#accept').click(function(){
   if( $('#name').val() !== '' ){
-    $('#holder').append(newUser);
+    $('#holder').append(newUser());
     $('#name').val("");
   } 
 });
 
 $('#name').keypress(function(e) {
   if(e.which === 13){
-    $('#holder').append(newUser);
+    $('#holder').append(newUser())  ;
     $('#name').val("");
   }
 });
@@ -409,4 +414,183 @@ $('#holder').delegate('.edit', 'click', function(){
     //   }
     // }
   }
+}); //edit button functionality
+
+//create the string that contains the elements of the overlay when help is 
+//pressed
+
+help = '<div class="help-overlay">';
+help += '<img src="img/cancel.png" id="help-cancel">';
+help += '<img src="img/left-arrow.png" id="left-arrow">';
+help += '<img src="img/right-arrow.png" id="right-arrow">';
+help += '</div>';
+
+nameHelp = '<div class= "name-help">';
+nameHelp += '<p>Enter the name of the person splitting the bill and press '
+nameHelp +=  'accept to start holding their balance.</p>'
+nameHelp += '</div>'
+
+transactionHelp = '<div class="transaction-help">';
+transactionHelp += '<p>Enter the name of a transaction, its value and ';
+transactionHelp += 'select the people who will be splitting it';
+transactionHelp += ' and press enter. You can also undo the previous'; 
+transactionHelp += ' transaction by pressing the undo button.</p>';
+transactionHelp += '</div>';
+
+peopleHelp = '<div class="people-help">';
+peopleHelp += '<p>Select people by clicking on them. Pressing view allows you';
+peopleHelp += ' to view their transactions, edit allows you to change the name';
+peopleHelp += ' of the person and delete removes the person and redistributes ';
+peopleHelp += 'their balance to the other people involved in their transactions';
+peopleHelp += '.</p></div>'
+
+$('#help').click(function(){
+  $('.main-header').css({
+    'margin-top': '51px'
+  })
+  $('body').append(help);
+  $('#help').hide();
+
+  addHelp('name');
+  $('#left-arrow').hide();
+});  //help button on click
+
+//remove the style and text elements of the help element specified 
+function removeHelp(type){
+  var $helpType = $('.' + type) ;
+  if(type === 'transaction'){
+    for(var i =0; i < 3; i++){
+    $helpType.children().last().remove()
+    }
+  } 
+  else if(type === 'name') {
+    for(var i =0; i < 2; i++){
+      $helpType.children().last().remove()
+    }
+  }
+
+  else{
+    $('#holder').children().last().remove();
+    peopleList.pop();
+  }
+
+  $helpType.removeAttr('style').removeClass('help');
+
+};
+
+//add the styling and text for the specified help type
+function addHelp(type){ 
+
+  if( type === 'people'){
+    //Create and highlight a sample person 
+    $('#name').val('Sample');
+    $('#holder').append(newUser);
+    $('#name').val('');
+    $('#holder').children().last().addClass('people');
+  }
+
+  var $helpType = $('.' + type);
+  $helpType.append('<img src="img/up-arrow.png">');
+
+  if( type === 'name'){
+    $helpType.children().last().addClass("name-arrow arrow");
+    $helpType.append(nameHelp).addClass('help');
+  }
+
+  else if( type === 'transaction'){
+    $helpType.children().last().addClass('transaction-arrow arrow');
+    $helpType.append('<img src="img/up-arrow.png" class="second-arrow arrow">');
+    $helpType.append(transactionHelp).addClass('help');
+  }
+
+  else{
+    $helpType.children().last().addClass('people-arrow arrow')
+    $helpType.append(peopleHelp).addClass('help');
+  }
+
+  $helpType.css({
+    'position': 'relative',
+    'z-index': '1',
+    'background-color': 'white'
+  });
+};
+
+//calls on the hide and add functions for the appropriate help texts 
+$('body').delegate('#right-arrow', 'click', function() {
+
+  if( $('.name').hasClass('help') ){
+    $('#left-arrow').show();
+    removeHelp('name');
+    addHelp('transaction');
+  }
+
+  else{
+    $('#right-arrow').hide();
+    removeHelp('transaction');
+    addHelp('people');
+  }
 });
+
+$('body').delegate('#left-arrow', 'click', function() {
+
+  if( $('.transaction').hasClass('help') ){
+    $('#left-arrow').hide();
+    removeHelp('transaction');
+    addHelp('name');
+  }
+
+  else{
+    $('#right-arrow').show();
+    removeHelp('people');
+    addHelp('transaction');
+  }
+});
+
+$('body').delegate('#help-cancel', 'click', function() {
+  $('#help').show();
+  $('.main-header').css({
+    'margin-top': '0'
+  });
+  $('body').children('.help-overlay').remove();
+
+  if($('.name').hasClass('help')){
+    removeHelp('name');
+  }
+  else if($('.transaction').hasClass('help')){
+    removeHelp('transaction');
+  }
+  else{
+    removeHelp('people');
+  }
+});   //help overlay close button
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
