@@ -4,24 +4,42 @@
   font-weight: 300;
 }
 
-#split{
-  width: 20%;
-  margin-top: 10px;
-}
+/*#split{
+  width: 5%;
+  margin: 10px 0 10px 0;
+}*/
+
 
 a{
   text-decoration: none;
 }
 
+body{
+  background-color: #f2f2f2;
+}
 .main-nav{
-  text-align: right;
-  padding-right: 10px;
+  background-color: #6995CA;
 }
 
-.main-nav button{
+.menu-bar{
+  text-align: right;
+  background-color: #D1D1D1;
+  height:51px;
+  width:80%;
+  margin:auto;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right:1px solid black;
+}
+
+.menu-bar button{
   background: #0097FE;
   color:white;
-  border-radius: 5px;
+  border:none;
+  border-left: 1px solid black;
+  border-radius: 0;
+  margin:0;
+  height:100%;
   z-index:1000;
 }
 
@@ -82,7 +100,7 @@ a{
   background-color: #FFFFFF;
   border: 1px solid #0076FE;
   border-radius: 5px; 
-  width: 75%;
+  width: 85%;
   left: 20%;
 }
 
@@ -103,23 +121,40 @@ a{
 }
 .main-header{
   text-align: center;
+  width:100%;
+  background-color:#6995CA;
+}
+
+.main-header h1{
+  color:white;
+  font-size: 10em;
+  margin:0;
 }
 
 .container{
   text-align: center;
+  width:90%;
+  margin:auto;
+  min-height: calc( 100vh - 250px) ;
+  height:auto;
 }
 
 input[type="text"]{
   width:60%;
   padding: 10px;
   margin:5px;
+  border:none;
+  border-bottom: 1px solid black;
 }
 
 .name{
   width:80%;
   margin:auto;
-  border: 1px solid navy;
-  border-radius: 15px;
+/*  border: 1px solid navy;
+  border-radius: 15px;*/
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
 }
 
 #name{
@@ -151,9 +186,11 @@ h4{
 
 .user{
   width:80%;
-  border: 1px solid black;
-  border-radius: 15px;
-  margin: 10px 0;
+/*  border: 1px solid black;
+  border-radius: 15px;*/
+  margin: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  background-color:#FFFFFF;
 }
 
 .selected{
@@ -163,14 +200,17 @@ h4{
 .transaction{
   width: 80%;
   margin: 25px 10% 0 10%;
-  border: 1px solid navy;
-  border-radius: 15px;
+/*  border: 1px solid navy;
+  border-radius: 15px;*/
   padding: 5px 0;
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   position:relative;
+  background-color: #FFFFFF;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
 }
 
 button {
@@ -182,7 +222,7 @@ button {
 }
 
 .user button{
-  margin: 0 10px 10px 10px;
+  margin-bottom: 10px;
   background-color: #FFFFFF;
   border:none;
   margin-top:0.75em;
@@ -255,8 +295,10 @@ button {
 
   .container{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   .name,
@@ -279,6 +321,7 @@ button {
     left: 28%;
   }
 
+
   .arrow{
     top:50%;
   }
@@ -299,11 +342,58 @@ button {
 
   .people-help{
     top:102%;
+    width:150%;
   }
 
   .people-arrow{
     top: 89%;
   }
+  
+  .sidebar{
+    width:100%;
+    display:flex;
+    justify-content: center;
+  }
+
+  #holder{
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80%;
+    overflow: visible;
+    align-items: flex-start;
+  }
+
+  .user{
+    width: 45%;
+  }
+
+  .user button{
+    padding: 10px;
+  }
 
 }
 
+@media(min-width:70em){
+  .sidebar{
+    width: 40%;
+    flex-direction: column;
+  }
+
+  .container{
+    width:80%;
+    margin: auto;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .name,
+  .transaction{
+    width: 90%;
+  }
+
+  #holder{
+    width:60%;
+  }
+
+
+}

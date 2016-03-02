@@ -445,9 +445,9 @@ peopleHelp += 'their balance to the other people involved in their transactions'
 peopleHelp += '.</p></div>'
 
 $('#help').click(function(){
-  $('.main-header').css({
-    'margin-top': '51px'
-  })
+  // $('.main-header').css({
+  //   'margin-top': '51px'
+  // })
   $('body').append(help);
   $('#help').hide();
 
@@ -564,7 +564,14 @@ $('body').delegate('#help-cancel', 'click', function() {
   }
 });   //help overlay close button
 
-
+// $('#split').click(function() {
+//   if ($(this).hasClass('maximized')){
+//     $(this).removeClass('maximized').css('width', '5%');;
+//   }
+//   else{
+//     $(this).addClass('maximized').css('width', '20%');;
+//   }
+// });
 
 
 

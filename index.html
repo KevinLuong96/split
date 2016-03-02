@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,300' 
+    rel='stylesheet' type='text/css'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= device-width, initial-scale=1.0">
+  <title>Split</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<nav class="main-nav">
+  <div class="menu-bar">
+    <button id='help'>Help</button>
+  </div>
+</nav>
+<header class="main-header">
+  <!-- <img id ="split" src="img/split.png" alt="split"> -->
+  <h1>SPLIT</h1>
+</header><!-- /header -->
+<div class="container">
+  <div class="sidebar">
+    <div class="name">
+      <h4>Person Name</h4>
+      <input type="text" placeholder="Name" id="name">
+      <button type="button" id="accept">Accept</button>
+    </div>
+    <div class="transaction">
+      <h4>Transactions</h4>
+      <div id="input">
+        <input type="text" placeholder="Name" id="item-input">
+        <input type="text" placeholder="Price" id="price">
+      </div>
+      <button type="button" id="transaction-button">Enter</button>
+      <img id= "undo" src="img/undo.png" alt="undo">
+    </div>
+  </div>
+  <ul id= "holder">
+  </ul>
+</div>
+<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
